@@ -3,7 +3,7 @@ import { ActivitiesService } from './activities.service';
 import { Activity } from './activity.model';
 import { CommentInput } from './comment.input';
 
-@Resolver(() => Activity) // Specify the type for the resolver
+@Resolver(() => Activity)
 export class ActivitiesResolver {
   constructor(private readonly activitiesService: ActivitiesService) { }
 
@@ -12,7 +12,7 @@ export class ActivitiesResolver {
     return this.activitiesService.findAll();
   }
 
-  @Mutation(() => Activity) // Specify the return type here
+  @Mutation(() => Activity)
   async createActivity(@Args('input') input: Activity) {
     return this.activitiesService.create(input);
   }

@@ -9,6 +9,7 @@ type Activity {
   comments: [Comment!]!
   likes: [String!]!
   shares: Float!
+  shareableLink: String!
 }
 
 type Comment {
@@ -23,6 +24,7 @@ input ActivityType {
   comments: [CommentType!]!
   likes: [String!]!
   shares: Float!
+  shareableLink: String!
 }
 
 input CommentType {
@@ -38,6 +40,7 @@ type Mutation {
   createActivity(input: ActivityType!): Activity!
   updateActivity(input: ActivityType!): Activity!
   postComment(activityId: String!, input: CommentInput!): Activity!
+  generateShareableLink(activityId: ID!): Activity!
 }
 
 input CommentInput {
