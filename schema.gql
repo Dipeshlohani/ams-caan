@@ -1,0 +1,46 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Activity {
+  _id: ID!
+  title: String!
+  description: String!
+  comments: [Comment!]!
+  likes: [String!]!
+  shares: Float!
+}
+
+type Comment {
+  commenterId: ID!
+  text: String!
+}
+
+input ActivityType {
+  _id: ID!
+  title: String!
+  description: String!
+  comments: [CommentType!]!
+  likes: [String!]!
+  shares: Float!
+}
+
+input CommentType {
+  commenterId: ID!
+  text: String!
+}
+
+type Query {
+  activities: [Activity!]!
+}
+
+type Mutation {
+  createActivity(input: ActivityType!): Activity!
+  updateActivity(input: ActivityType!): Activity!
+  postComment(activityId: String!, input: CommentInput!): Activity!
+}
+
+input CommentInput {
+  commenterId: ID!
+  text: String!
+}
