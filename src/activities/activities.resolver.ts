@@ -1,7 +1,7 @@
-import { Resolver, Args, Mutation, Query, ID } from '@nestjs/graphql';
+import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { ActivitiesService } from './activities.service';
 import { Activity } from './activity.model';
-import { CommentInput } from './comment.input';
+import * as shortid from 'shortid';
 
 @Resolver(() => Activity)
 export class ActivitiesResolver {
@@ -9,31 +9,30 @@ export class ActivitiesResolver {
 
   @Query(() => [Activity])
   async activities() {
-    return this.activitiesService.findAll();
+    return this.activitiesService.getActivities();
+  }
+
+  @Query(() => Activity)
+  async activity(@Args('id', { type: () => String }) id: string) {
+    return this.activitiesService.getActivityById(id);
   }
 
   @Mutation(() => Activity)
-  async createActivity(@Args('input') input: Activity) {
-    return this.activitiesService.create(input);
-  }
-
-  @Mutation(() => Activity)
-  async updateActivity(@Args('input') input: Activity) {
-    return this.activitiesService.update(input._id, input);
-  }
-
-  @Mutation(() => Activity)
-  async postComment(
-    @Args('activityId') activityId: string,
-    @Args('input') input: CommentInput,
+  async createActivity(
+    @Args('title', { type: () => String }) title: string,
+    @Args('description', { type: () => String }) description: string,
+    @Args('userId', { type: () => String }) userId: string,
   ) {
-    return this.activitiesService.postComment(activityId, input);
+    const shareableLink = generateUniqueShareableLink(); // Generate a shareable link
+    return this.activitiesService.createActivity(
+      title,
+      description,
+      userId,
+      shareableLink,
+    );
   }
+}
 
-  @Mutation(() => Activity)
-  async generateShareableLink(
-    @Args('activityId', { type: () => ID }) activityId: string,
-  ) {
-    return this.activitiesService.generateShareableLink(activityId);
-  }
+export function generateUniqueShareableLink() {
+  return shortid.generate();
 }

@@ -6,44 +6,36 @@ type Activity {
   _id: ID!
   title: String!
   description: String!
-  comments: [Comment!]!
-  likes: [String!]!
-  shares: Float!
+  userId: ID!
+  comments: [ID!]!
+  reactions: [ID!]!
   shareableLink: String!
 }
 
 type Comment {
-  commenterId: ID!
-  text: String!
-}
-
-input ActivityType {
   _id: ID!
-  title: String!
-  description: String!
-  comments: [CommentType!]!
-  likes: [String!]!
-  shares: Float!
-  shareableLink: String!
+  content: String!
+  userId: ID!
+  activityId: ID!
 }
 
-input CommentType {
-  commenterId: ID!
-  text: String!
+type Reaction {
+  _id: ID!
+  userId: ID!
+  activityId: ID!
+  type: String!
 }
 
 type Query {
   activities: [Activity!]!
+  activity(id: String!): Activity!
+  comments: [Comment!]!
+  commentsByActivity(activityId: String!): [Comment!]!
+  reactionsByActivity(activityId: String!): [Reaction!]!
 }
 
 type Mutation {
-  createActivity(input: ActivityType!): Activity!
-  updateActivity(input: ActivityType!): Activity!
-  postComment(activityId: String!, input: CommentInput!): Activity!
-  generateShareableLink(activityId: ID!): Activity!
-}
-
-input CommentInput {
-  commenterId: ID!
-  text: String!
+  createActivity(title: String!, description: String!, userId: String!): Activity!
+  createComment(content: String!, userId: String!, activityId: String!): Comment!
+  createReaction(userId: String!, activityId: String!, type: String!): Reaction!
 }

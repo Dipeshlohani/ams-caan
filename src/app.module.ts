@@ -3,6 +3,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ActivitiesModule } from './activities/activities.module';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { CommentsModule } from './comments/comment.module';
+import { Activity, ActivitySchema } from './activities/activity.model';
+import { ReactionsModule } from './reactions/reaction.module';
 
 @Module({
   imports: [
@@ -12,6 +15,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
       driver: ApolloDriver,
     }),
     ActivitiesModule,
+    CommentsModule,
+    ReactionsModule,
   ],
 })
 export class AppModule { }

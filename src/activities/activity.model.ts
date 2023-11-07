@@ -1,40 +1,38 @@
-import { ObjectType, Field, ID, InputType } from '@nestjs/graphql';
-import { SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
 
+@Schema()
 @ObjectType()
-@InputType('ActivityType')
 export class Activity {
   @Field(() => ID)
   _id: string;
 
   @Field()
+  @Prop({ required: true })
   title: string;
 
   @Field()
+  @Prop({ required: true })
   description: string;
 
-  @Field(() => [Comment]) // Add a field for comments
-  comments: Comment[];
+  @Field(() => ID)
+  @Prop({ required: true })
+  userId: string;
 
-  @Field(() => [String])
-  likes: string[];
+  @Field(() => [ID])
+  @Prop({ type: [String], default: [] })
+  comments: string[];
+
+  @Field(() => [ID])
+  @Prop({ type: [String], default: [] })
+  reactions: string[];
 
   @Field()
-  shares: number;
-
-  @Field()
+  @Prop()
   shareableLink: string;
 }
+
 export type ActivityDocument = Activity & Document;
 
 export const ActivitySchema = SchemaFactory.createForClass(Activity);
-
-@ObjectType()
-@InputType('CommentType')
-export class Comment {
-  @Field(() => ID)
-  commenterId: string;
-
-  @Field()
-  text: string;
-}
