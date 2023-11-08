@@ -1,0 +1,51 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Activity {
+  _id: ID!
+  title: String!
+  description: String!
+  userId: ID!
+  comments: [ID!]!
+  reactions: [ID!]!
+  shareableLink: String!
+}
+
+type Comment {
+  _id: ID!
+  content: String!
+  userId: ID!
+  activityId: ID!
+}
+
+type Reaction {
+  _id: ID!
+  userId: ID!
+  activityId: ID!
+  type: String!
+}
+
+type User {
+  _id: ID!
+  name: String!
+  designation: String!
+  activities: [Activity!]!
+}
+
+type Query {
+  activities: [Activity!]!
+  activity(id: String!): Activity!
+  comments: [Comment!]!
+  commentsByActivity(activityId: String!): [Comment!]!
+  reactionsByActivity(activityId: String!): [Reaction!]!
+  users: [User!]!
+  user(id: String!): User!
+}
+
+type Mutation {
+  createActivity(title: String!, description: String!, userId: String!): Activity!
+  createComment(content: String!, userId: String!, activityId: String!): Comment!
+  createReaction(userId: String!, activityId: String!, type: String!): Reaction!
+  createUser(name: String!, designation: String!): User!
+}
