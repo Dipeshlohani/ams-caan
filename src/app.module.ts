@@ -6,6 +6,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { CommentsModule } from './comments/comment.module';
 import { Activity, ActivitySchema } from './activities/activity.model';
 import { ReactionsModule } from './reactions/reaction.module';
+import { UsersModule } from './user/user.module'
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { ReactionsModule } from './reactions/reaction.module';
     ActivitiesModule,
     CommentsModule,
     ReactionsModule,
+    UsersModule,
   ],
 })
 export class AppModule { }
