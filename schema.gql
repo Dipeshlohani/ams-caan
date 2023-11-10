@@ -44,16 +44,8 @@ type Query {
 }
 
 type Mutation {
-  createActivity(
-    title: String!
-    description: String!
-    userId: String!
-  ): Activity!
-  createComment(
-    content: String!
-    userId: String!
-    activityId: String!
-  ): Comment!
+  createActivity(title: String!, description: String!, userId: String!): Activity!
+  createComment(content: String!, userId: String!, activityId: String!): Comment!
   createReaction(userId: String!, activityId: String!, type: String!): Reaction!
   createUser(name: String!, designation: String!): User!
 }

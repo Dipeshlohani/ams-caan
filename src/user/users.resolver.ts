@@ -24,4 +24,3 @@ export class UsersResolver {
     return this.usersService.createUser(name, designation);
   }
 }
-
