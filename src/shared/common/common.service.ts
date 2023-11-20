@@ -1,6 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common'
 import { Common } from './common.model';
-
 @Injectable()
 export class CommonService<T extends Common> {
   private readonly commonItems: T[] = [];
