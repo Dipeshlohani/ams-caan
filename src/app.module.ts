@@ -7,6 +7,7 @@ import { CommentsModule } from './comments/comment.module';
 import { Activity, ActivitySchema } from './activities/activity.model';
 import { ReactionsModule } from './reactions/reaction.module';
 import { UsersModule } from './user/user.module'
+import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { UsersModule } from './user/user.module'
     CommentsModule,
     ReactionsModule,
     UsersModule,
+    SharedModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}

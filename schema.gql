@@ -34,8 +34,8 @@ type User {
 }
 
 type Query {
-  activities: [Activity!]!
-  activity(id: String!): Activity!
+  getActivities: [Activity!]!
+  getActivityById(id: ID!): Activity!
   comments: [Comment!]!
   commentsByActivity(activityId: String!): [Comment!]!
   reactionsByActivity(activityId: String!): [Reaction!]!
@@ -44,7 +44,7 @@ type Query {
 }
 
 type Mutation {
-  createActivity(title: String!, description: String!, userId: String!): Activity!
+  createActivity(title: String!, description: String!, userId: String!, shareableLink: String!): Activity!
   createComment(content: String!, userId: String!, activityId: String!): Comment!
   createReaction(userId: String!, activityId: String!, type: String!): Reaction!
   createUser(name: String!, designation: String!): User!

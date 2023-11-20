@@ -12,4 +12,4 @@ import { Activity, ActivitySchema } from './activity.model';
   ],
   providers: [ActivitiesResolver, ActivitiesService],
 })
-export class ActivitiesModule { }
+export class ActivitiesModule {}
