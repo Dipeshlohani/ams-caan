@@ -1,4 +1,4 @@
-import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
+import { Resolver, Query, Args, Mutation, Root  } from '@nestjs/graphql';
 import { ActivitiesService } from './activities.service';
 import { Activity } from './activity.model';
 import * as shortid from 'shortid';
@@ -15,6 +15,11 @@ export class ActivitiesResolver {
   @Query(() => Activity)
   async activity(@Args('id', { type: () => String }) id: string) {
     return this.activitiesService.getActivityById(id);
+  }
+
+  @Query(() => Activity)
+  async totalComments(@Root() activity: Activity) {
+    return this.activitiesService.getTotalComments(activity._id);
   }
 
   @Mutation(() => Activity)

@@ -25,4 +25,20 @@ export class ReactionService {
   async getReactionsByActivity(activityId: string): Promise<Reaction[]> {
     return this.reactionModel.find({ activityId }).exec();
   }
+
+  async updateReaction(reactionId: string, newType: string): Promise<Reaction> {
+    return this.reactionModel.findByIdAndUpdate(
+      reactionId,
+      { type: newType },
+      { new: true },
+    );
+  }
+
+  async deleteReaction(reactionId: string): Promise<void> {
+    await this.reactionModel.findByIdAndDelete(reactionId);
+  }
 }
+
+
+
+

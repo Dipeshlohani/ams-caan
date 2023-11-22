@@ -31,6 +31,10 @@ export class Activity {
   @Field()
   @Prop()
   shareableLink: string;
+
+  @Field()
+  @Prop({ default: 0 }) // Default to 0 comments
+  totalComments: number;
 }
 
 export type ActivityDocument = Activity & Document;

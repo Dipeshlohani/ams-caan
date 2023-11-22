@@ -2,6 +2,8 @@ import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { ReactionService } from './reaction.service';
 import { Reaction } from './reaction.model';
 
+
+
 @Resolver(() => Reaction)
 export class ReactionsResolver {
   constructor(private readonly reactionsService: ReactionService) { }
@@ -21,4 +23,23 @@ export class ReactionsResolver {
   ) {
     return this.reactionsService.createReaction(userId, activityId, type);
   }
+
+  @Mutation(() => Reaction)
+  async updateReaction(
+    @Args('reactionId', { type: () => String }) reactionId: string,
+    @Args('newType', { type: () => String }) newType: string,
+  ) {
+    return this.reactionsService.updateReaction(reactionId, newType);
+  }
+
+  @Mutation(() => Boolean)
+  async deleteReaction(
+    @Args('reactionId', { type: () => String }) reactionId: string,
+  ) {
+    await this.reactionsService.deleteReaction(reactionId);
+    return true;
+  }
+
+
+
 }

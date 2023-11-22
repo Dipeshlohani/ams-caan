@@ -31,4 +31,11 @@ export class ActivitiesService {
   async getActivityById(id: string): Promise<Activity> {
     return this.activityModel.findById(id).exec();
   }
+
+  async getTotalComments(activityId: string): Promise<number> {
+    const activity = await this.activityModel.findById(activityId).exec();
+    console.log ("activity:", activity)
+    return activity ? activity.totalComments : 0;
+  }
+
 }

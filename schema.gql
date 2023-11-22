@@ -10,6 +10,7 @@ type Activity {
   comments: [ID!]!
   reactions: [ID!]!
   shareableLink: String!
+  totalComments: Float!
 }
 
 type Comment {
@@ -36,6 +37,7 @@ type User {
 type Query {
   activities: [Activity!]!
   activity(id: String!): Activity!
+  totalComments: Activity!
   comments: [Comment!]!
   commentsByActivity(activityId: String!): [Comment!]!
   reactionsByActivity(activityId: String!): [Reaction!]!
@@ -47,5 +49,7 @@ type Mutation {
   createActivity(title: String!, description: String!, userId: String!): Activity!
   createComment(content: String!, userId: String!, activityId: String!): Comment!
   createReaction(userId: String!, activityId: String!, type: String!): Reaction!
+  updateReaction(reactionId: String!, newType: String!): Reaction!
+  deleteReaction(reactionId: String!): Boolean!
   createUser(name: String!, designation: String!): User!
 }
