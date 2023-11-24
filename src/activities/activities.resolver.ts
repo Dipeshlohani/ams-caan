@@ -22,6 +22,12 @@ export class ActivitiesResolver {
     return this.activitiesService.getTotalComments(activity._id);
   }
 
+
+  @Query(() => Activity)
+  async totalReactions(@Root() activity: Activity) {
+    return this.activitiesService.getTotalReactions(activity._id);
+  }
+
   @Mutation(() => Activity)
   async createActivity(
     @Args('title', { type: () => String }) title: string,

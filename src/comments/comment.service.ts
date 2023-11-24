@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { Comment, CommentDocument } from './comment.model';
 
 @Injectable()
-export class CommentsService {
+export class CommentService {
   constructor(
     @InjectModel(Comment.name) private commentModel: Model<CommentDocument>,
   ) { }
@@ -22,9 +22,9 @@ export class CommentsService {
     return createdComment.save();
   }
 
-  async getComments(): Promise<Comment[]> {
-    return this.commentModel.find().exec();
-  }
+  // async getComments(): Promise<Comment[]> {
+  //   return this.commentModel.find().exec();
+  // }
 
   async getCommentsByActivity(activityId: string): Promise<Comment[]> {
     return this.commentModel.find({ activityId }).exec();

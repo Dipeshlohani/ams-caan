@@ -10,7 +10,13 @@ type Activity {
   comments: [ID!]!
   reactions: [ID!]!
   shareableLink: String!
-  totalComments: Float!
+}
+
+type Reaction {
+  _id: ID!
+  userId: ID!
+  activityId: ID!
+  type: String!
 }
 
 type Comment {
@@ -20,11 +26,14 @@ type Comment {
   activityId: ID!
 }
 
-type Reaction {
-  _id: ID!
-  userId: ID!
-  activityId: ID!
-  type: String!
+type ReactionsByActivityResponse {
+  reactions: [Reaction!]!
+  totalReactions: Int!
+}
+
+type CommentsByActivityResponse {
+  comments: [Comment!]!
+  totalComments: Int!
 }
 
 type User {
@@ -38,18 +47,18 @@ type Query {
   activities: [Activity!]!
   activity(id: String!): Activity!
   totalComments: Activity!
-  comments: [Comment!]!
-  commentsByActivity(activityId: String!): [Comment!]!
-  reactionsByActivity(activityId: String!): [Reaction!]!
+  totalReactions: Activity!
+  reactionsByActivity(activityId: String!): ReactionsByActivityResponse!
+  commentsByActivity(activityId: String!): CommentsByActivityResponse!
   users: [User!]!
   user(id: String!): User!
 }
 
 type Mutation {
   createActivity(title: String!, description: String!, userId: String!): Activity!
-  createComment(content: String!, userId: String!, activityId: String!): Comment!
   createReaction(userId: String!, activityId: String!, type: String!): Reaction!
   updateReaction(reactionId: String!, newType: String!): Reaction!
   deleteReaction(reactionId: String!): Boolean!
+  createComment(content: String!, userId: String!, activityId: String!): Comment!
   createUser(name: String!, designation: String!): User!
 }
