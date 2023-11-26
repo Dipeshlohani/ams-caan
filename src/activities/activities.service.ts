@@ -49,3 +49,4 @@ export class ActivitiesService {
     return reactions.length;
   }
 }
+
