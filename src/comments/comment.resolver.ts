@@ -3,13 +3,12 @@ import { CommentService } from './comment.service';
 import { Comment } from './comment.model';
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 
-
-@ObjectType() // Add ObjectType decorator to define the GraphQL type
+@ObjectType()
 class CommentsByActivityResponse {
-  @Field(() => [Comment]) // Assuming Reaction is the type of your reactions
+  @Field(() => [Comment])
   comments: Comment[];
 
-  @Field(() => Int) // Use Int for the totalReactions count
+  @Field(() => Int)
   totalComments: number;
 }
 
@@ -17,18 +16,13 @@ class CommentsByActivityResponse {
 export class CommentsResolver {
   constructor(private readonly commentsService: CommentService) { }
 
-  // @Query(() => Comment)
-  // async comments() {
-  //   return this.commentsService.getComments();
-  // }
-
   @Query(() => CommentsByActivityResponse)
   async commentsByActivity(
     @Args('activityId', { type: () => String }) activityId: string,
   ) {
     const comments = await this.commentsService.getCommentsByActivity(activityId);
     const totalComments = comments.length;
-    return {comments, totalComments};
+    return { comments, totalComments };
   }
 
   @Mutation(() => Comment)

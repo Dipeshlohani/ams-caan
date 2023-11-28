@@ -22,11 +22,8 @@ export class CommentService {
     return createdComment.save();
   }
 
-  // async getComments(): Promise<Comment[]> {
-  //   return this.commentModel.find().exec();
-  // }
-
-  async getCommentsByActivity(activityId: string): Promise<Comment[]> {
-    return this.commentModel.find({ activityId }).exec();
+  async getCommentsByActivity(activityId: string, limit: number = 10): Promise<Comment[]> {
+    // Sort comments by createdAt in descending order and limit the result
+    return this.commentModel.find({ activityId }).sort({ createdAt: -1 }).limit(limit).exec();
   }
 }

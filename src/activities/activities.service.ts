@@ -15,24 +15,25 @@ export class ActivitiesService {
 
     ) {}
 
-  async createActivity(
-    title: string,
-    description: string,
-    userId: string,
-    shareableLink: string,
-  ): Promise<Activity> {
-    const createdActivity = new this.activityModel({
-      title,
-      description,
-      userId,
-      shareableLink,
-    });
-    return createdActivity.save();
-  }
+    async createActivity(
+      title: string,
+      description: string,
+      userId: string,
+      shareableLink: string,
+    ): Promise<Activity> {
+      const createdActivity = new this.activityModel({
+        title,
+        description,
+        userId,
+        shareableLink,
+      });
+      return createdActivity.save();
+    }
 
-  async getActivities(): Promise<Activity[]> {
-    return this.activityModel.find().exec();
-  }
+    async getActivities(limit: number = 10): Promise<Activity[]> {
+      // Sort activities by createdAt in descending order and limit the result
+      return this.activityModel.find().sort({ createdAt: -1 }).limit(limit).exec();
+    }
 
   async getActivityById(id: string): Promise<Activity> {
     return this.activityModel.findById(id).exec();

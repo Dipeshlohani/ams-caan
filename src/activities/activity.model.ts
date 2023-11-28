@@ -9,7 +9,7 @@ export class Activity {
   _id: string;
 
   @Field()
-  @Prop({ required: true })
+  @Prop({ required: false })
   title: string;
 
   @Field()
@@ -31,6 +31,11 @@ export class Activity {
   @Field()
   @Prop()
   shareableLink: string;
+  
+  @Field(() => Date) // Include createdAt field in GraphQL type
+  @Prop({ default: Date.now })
+  createdAt: Date;
+
 }
 
 export type ActivityDocument = Activity & Document;

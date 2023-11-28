@@ -27,6 +27,7 @@ export class ActivitiesResolver {
   async totalReactions(@Root() activity: Activity) {
     return this.activitiesService.getTotalReactions(activity._id);
   }
+  
 
   @Mutation(() => Activity)
   async createActivity(

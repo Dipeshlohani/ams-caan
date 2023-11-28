@@ -22,8 +22,9 @@ export class ReactionService {
     return createdReaction.save();
   }
 
-  async getReactionsByActivity(activityId: string): Promise<Reaction[]> {
-    return this.reactionModel.find({ activityId }).exec();
+  async getReactionsByActivity(activityId: string, limit: number = 10): Promise<Reaction[]> {
+    // Sort reactions by createdAt in descending order and limit the result
+    return this.reactionModel.find({ activityId }).sort({ createdAt: -1 }).limit(limit).exec();
   }
 
   async updateReaction(reactionId: string, newType: string): Promise<Reaction> {
