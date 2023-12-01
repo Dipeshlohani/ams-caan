@@ -36,7 +36,12 @@ export class Activity {
   @Prop({ default: Date.now })
   createdAt: Date;
 
+  @Field(() => Number) // Include shareCount field in GraphQL type
+  @Prop({ default: 0 })
+  shareCount: number;
 }
+
+
 
 export type ActivityDocument = Activity & Document;
 

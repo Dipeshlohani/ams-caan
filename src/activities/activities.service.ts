@@ -49,5 +49,16 @@ export class ActivitiesService {
     const reactions = await this.reactionService.getReactionsByActivity(activityId);
     return reactions.length;
   }
+
+    // Add the new method to update the share count
+    async updateShareCount(activityId: string): Promise<Activity> {
+      const activity = await this.activityModel.findById(activityId).exec();
+      if (activity) {
+        activity.shareCount = (activity.shareCount || 0) + 1;
+        await activity.save();
+      }
+      return activity;
+    }
+  
 }
 

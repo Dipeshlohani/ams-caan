@@ -11,6 +11,7 @@ type Activity {
   reactions: [ID!]!
   shareableLink: String!
   createdAt: DateTime!
+  shareCount: Float!
 }
 
 """
@@ -64,6 +65,7 @@ type Query {
 
 type Mutation {
   createActivity(title: String!, description: String!, userId: String!): Activity!
+  updateShareCount(activityId: String!): Activity!
   createReaction(userId: String!, activityId: String!, type: String!): Reaction!
   updateReaction(reactionId: String!, newType: String!): Reaction!
   deleteReaction(reactionId: String!): Boolean!

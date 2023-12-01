@@ -28,22 +28,24 @@ export class ActivitiesResolver {
     return this.activitiesService.getTotalReactions(activity._id);
   }
   
-
+  
   @Mutation(() => Activity)
   async createActivity(
     @Args('title', { type: () => String }) title: string,
     @Args('description', { type: () => String }) description: string,
     @Args('userId', { type: () => String }) userId: string,
   ) {
-    const shareableLink = generateUniqueShareableLink(); // Generate a shareable link
-    return this.activitiesService.createActivity(
-      title,
-      description,
-      userId,
-      shareableLink,
-    );
+    const shareableLink = generateUniqueShareableLink();
+    return this.activitiesService.createActivity(title, description, userId, shareableLink);
+  }
+
+  // Add the new mutation for updating the share count
+  @Mutation(() => Activity)
+  async updateShareCount(@Args('activityId', { type: () => String }) activityId: string) {
+    return this.activitiesService.updateShareCount(activityId);
   }
 }
+
 
 export function generateUniqueShareableLink() {
   return shortid.generate();
