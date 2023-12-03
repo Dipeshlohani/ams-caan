@@ -26,6 +26,11 @@ export class Reaction {
   @Field()
   @Prop({ required: true, enum: ReactionType })
   type: ReactionType;
+
+  @Field(() => Date) // Include createdAt field in GraphQL type
+  @Prop({ default: Date.now })
+  createdAt: Date;
+
 }
 
 export type ReactionDocument = Reaction & Document;

@@ -10,6 +10,21 @@ type Activity {
   comments: [ID!]!
   reactions: [ID!]!
   shareableLink: String!
+  createdAt: DateTime!
+  shareCount: Float!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Reaction {
+  _id: ID!
+  userId: ID!
+  activityId: ID!
+  type: String!
+  createdAt: DateTime!
 }
 
 type Comment {
@@ -17,13 +32,17 @@ type Comment {
   content: String!
   userId: ID!
   activityId: ID!
+  createdAt: DateTime!
 }
 
-type Reaction {
-  _id: ID!
-  userId: ID!
-  activityId: ID!
-  type: String!
+type ReactionsByActivityResponse {
+  reactions: [Reaction!]!
+  totalReactions: Int!
+}
+
+type CommentsByActivityResponse {
+  comments: [Comment!]!
+  totalComments: Int!
 }
 
 type User {
@@ -36,16 +55,20 @@ type User {
 type Query {
   activities: [Activity!]!
   activity(id: String!): Activity!
-  comments: [Comment!]!
-  commentsByActivity(activityId: String!): [Comment!]!
-  reactionsByActivity(activityId: String!): [Reaction!]!
+  totalComments: Activity!
+  totalReactions: Activity!
+  reactionsByActivity(activityId: String!): ReactionsByActivityResponse!
+  commentsByActivity(activityId: String!): CommentsByActivityResponse!
   users: [User!]!
   user(id: String!): User!
 }
 
 type Mutation {
   createActivity(title: String!, description: String!, userId: String!): Activity!
-  createComment(content: String!, userId: String!, activityId: String!): Comment!
+  updateShareCount(activityId: String!): Activity!
   createReaction(userId: String!, activityId: String!, type: String!): Reaction!
+  updateReaction(reactionId: String!, newType: String!): Reaction!
+  deleteReaction(reactionId: String!): Boolean!
+  createComment(content: String!, userId: String!, activityId: String!): Comment!
   createUser(name: String!, designation: String!): User!
 }

@@ -11,5 +11,6 @@ import { Reaction, ReactionSchema } from './reaction.model';
     ]),
   ],
   providers: [ReactionsResolver, ReactionService],
+  exports: [ReactionService],
 })
 export class ReactionsModule { }

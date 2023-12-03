@@ -19,6 +19,10 @@ export class Comment {
   @Field(() => ID)
   @Prop({ required: true })
   activityId: string;
+
+  @Field(() => Date) // Include createdAt field in GraphQL type
+  @Prop({ default: Date.now })
+  createdAt: Date;
 }
 
 export type CommentDocument = Comment & Document;

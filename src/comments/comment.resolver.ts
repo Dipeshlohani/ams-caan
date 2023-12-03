@@ -1,21 +1,28 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
-import { CommentsService } from './comment.service';
+import { CommentService } from './comment.service';
 import { Comment } from './comment.model';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
+
+@ObjectType()
+class CommentsByActivityResponse {
+  @Field(() => [Comment])
+  comments: Comment[];
+
+  @Field(() => Int)
+  totalComments: number;
+}
 
 @Resolver(() => Comment)
 export class CommentsResolver {
-  constructor(private readonly commentsService: CommentsService) { }
+  constructor(private readonly commentsService: CommentService) { }
 
-  @Query(() => [Comment])
-  async comments() {
-    return this.commentsService.getComments();
-  }
-
-  @Query(() => [Comment])
+  @Query(() => CommentsByActivityResponse)
   async commentsByActivity(
     @Args('activityId', { type: () => String }) activityId: string,
   ) {
-    return this.commentsService.getCommentsByActivity(activityId);
+    const comments = await this.commentsService.getCommentsByActivity(activityId);
+    const totalComments = comments.length;
+    return { comments, totalComments };
   }
 
   @Mutation(() => Comment)
