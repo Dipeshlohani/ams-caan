@@ -1,16 +1,14 @@
 // shared-link.resolver.ts
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
-import { SharedLinkService } from './shared.service'
+import { Resolver, Args, Mutation } from '@nestjs/graphql';
 import { SharedLink } from './shared.model';
+import { SharedLinkService } from './shared.service';
 
 @Resolver(() => SharedLink)
 export class SharedLinkResolver {
   constructor(private readonly sharedLinkService: SharedLinkService) {}
 
   @Mutation(() => SharedLink)
-  async generateShareableLink(
-    @Args('activityId', { type: () => String }) activityId: string,
-  ): Promise<SharedLink> {
-    return this.sharedLinkService.generateShareableLink(activityId);
+  async incrementShareCount(@Args('linkId') linkId: string): Promise<SharedLink> {
+    return this.sharedLinkService.incrementShareCount(linkId);
   }
 }

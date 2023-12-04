@@ -17,7 +17,13 @@ type Comment {
   content: String!
   userId: ID!
   activityId: ID!
+  createdAt: DateTime!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Reaction {
   _id: ID!
@@ -31,6 +37,13 @@ type User {
   name: String!
   designation: String!
   activities: [Activity!]!
+}
+
+type SharedLink {
+  _id: ID!
+  activityId: String!
+  shareableLink: String!
+  shareCount: Float!
 }
 
 type Query {
@@ -48,4 +61,5 @@ type Mutation {
   createComment(content: String!, userId: String!, activityId: String!): Comment!
   createReaction(userId: String!, activityId: String!, type: String!): Reaction!
   createUser(name: String!, designation: String!): User!
+  incrementShareCount(linkId: String!): SharedLink!
 }

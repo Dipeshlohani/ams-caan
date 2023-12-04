@@ -17,6 +17,10 @@ export class SharedLink {
   @Prop({ required: true })
   shareableLink: string;
 
+  @Field()
+  @Prop({ default: 0 }) // Initialize shareCount with 0
+  shareCount: number;
+
   // Add other properties as needed
 }
 

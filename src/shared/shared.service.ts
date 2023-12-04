@@ -7,14 +7,17 @@ import { SharedLink, SharedLinkDocument } from './shared.model';
 @Injectable()
 export class SharedLinkService {
   constructor(
-    @InjectModel(SharedLink.name) private sharedLinkModel: Model<SharedLinkDocument>,
+    @InjectModel(SharedLink.name)
+    private sharedLinkModel: Model<SharedLinkDocument>,
   ) {}
 
-  async generateShareableLink(activityId: string): Promise<SharedLink> {
-    const shareableLink = `https://yourdomain.com/activity/${6}`;
-    const createdLink = new this.sharedLinkModel({ activityId, shareableLink });
-    return createdLink.save();
-  }
+  async incrementShareCount(linkId: string): Promise<SharedLinkDocument> {
+    const link = await this.sharedLinkModel.findByIdAndUpdate(
+      linkId,
+      { $inc: { shareCount: 1 } },
+      { new: true },
+    );
 
-  // Other methods related to SharedLink...
+    return link;
+  }
 }
