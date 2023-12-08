@@ -31,17 +31,27 @@ export class Activity {
   @Field()
   @Prop()
   shareableLink: string;
-  
-  @Field(() => Date) // Include createdAt field in GraphQL type
+
+  @Field()
+  @Prop({ default: false })
+  isPublic: boolean;
+
+  @Field(() => Date)
   @Prop({ default: Date.now })
   createdAt: Date;
 
-  @Field(() => Number) // Include shareCount field in GraphQL type
+  @Field(() => Number)
   @Prop({ default: 0 })
   shareCount: number;
+
+  @Field(() => [String]) // Field for storing image URLs
+  @Prop({ type: [String], default: [], required: false })
+  imgUrls: string[];
+
+  @Field(() => [String]) // Field for storing file URLs
+  @Prop({ type: [String], default: [], required: false })
+  files: string[];
 }
-
-
 
 export type ActivityDocument = Activity & Document;
 

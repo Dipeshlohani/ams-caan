@@ -10,8 +10,11 @@ type Activity {
   comments: [ID!]!
   reactions: [ID!]!
   shareableLink: String!
+  isPublic: Boolean!
   createdAt: DateTime!
   shareCount: Float!
+  imgUrls: [String!]!
+  files: [String!]!
 }
 
 """
@@ -64,7 +67,9 @@ type Query {
 }
 
 type Mutation {
-  createActivity(title: String!, description: String!, userId: String!): Activity!
+  createActivity(title: String!, description: String!, userId: String!, imgUrls: [String!]! = [], files: [String!]! = []): Activity!
+  updateActivity(activityId: String!, title: String, description: String, imgUrls: [String!]): Activity!
+  deleteActivity(activityId: String!): Activity!
   updateShareCount(activityId: String!): Activity!
   createReaction(userId: String!, activityId: String!, type: String!): Reaction!
   updateReaction(reactionId: String!, newType: String!): Reaction!

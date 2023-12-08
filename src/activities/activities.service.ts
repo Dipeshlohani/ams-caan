@@ -12,28 +12,55 @@ export class ActivitiesService {
     @InjectModel(Activity.name) private activityModel: Model<ActivityDocument>,
     private readonly reactionService: ReactionService, // Inject the ReactionService
     private readonly commentsService: CommentService, // Inject the CommentService
+  ) { }
 
-    ) {}
+  async createActivity(
+    title: string,
+    description: string,
+    userId: string,
+    shareableLink: string,
+    imgUrls: string[],
+    files: string[],
+  ): Promise<Activity> {
+    const createdActivity = new this.activityModel({
+      title,
+      description,
+      userId,
+      shareableLink,
+      imgUrls,
+      files,
+    });
+    return createdActivity.save();
+  }
 
-    async createActivity(
-      title: string,
-      description: string,
-      userId: string,
-      shareableLink: string,
-    ): Promise<Activity> {
-      const createdActivity = new this.activityModel({
-        title,
-        description,
-        userId,
-        shareableLink,
-      });
-      return createdActivity.save();
-    }
+  async updateActivity(
+    activityId: string,
+    title?: string,
+    description?: string,
+    imgUrls?: string[],
+    files?: string[],
+  ): Promise<Activity> {
+    const updatedActivity = this.activityModel.findByIdAndUpdate(activityId, {
+      title,
+      description,
+      imgUrls,
+      files,
+    });
+    return updatedActivity;
+  }
 
-    async getActivities(limit: number = 10): Promise<Activity[]> {
-      // Sort activities by createdAt in descending order and limit the result
-      return this.activityModel.find().sort({ createdAt: -1 }).limit(limit).exec();
-    }
+  async deleteActivity(activityId: string): Promise<Activity> {
+    return this.activityModel.findOneAndDelete({ _id: activityId });
+  }
+
+  async getActivities(limit: number = 10): Promise<Activity[]> {
+    // Sort activities by createdAt in descending order and limit the result
+    return this.activityModel
+      .find()
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .exec();
+  }
 
   async getActivityById(id: string): Promise<Activity> {
     return this.activityModel.findById(id).exec();
@@ -50,15 +77,13 @@ export class ActivitiesService {
     return reactions.length;
   }
 
-    // Add the new method to update the share count
-    async updateShareCount(activityId: string): Promise<Activity> {
-      const activity = await this.activityModel.findById(activityId).exec();
-      if (activity) {
-        activity.shareCount = (activity.shareCount || 0) + 1;
-        await activity.save();
-      }
-      return activity;
+  // Add the new method to update the share count
+  async updateShareCount(activityId: string): Promise<Activity> {
+    const activity = await this.activityModel.findById(activityId).exec();
+    if (activity) {
+      activity.shareCount = (activity.shareCount || 0) + 1;
+      await activity.save();
     }
-  
+    return activity;
+  }
 }
-

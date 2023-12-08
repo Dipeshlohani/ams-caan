@@ -9,10 +9,12 @@ import { CommentsModule } from '../comments/comment.module'; // Import the Comme
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Activity.name, schema: ActivitySchema }]),
+    MongooseModule.forFeature([
+      { name: Activity.name, schema: ActivitySchema },
+    ]),
     ReactionsModule, // Include ReactionsModule in the imports array
     CommentsModule,
   ],
   providers: [ActivitiesResolver, ActivitiesService],
 })
-export class ActivitiesModule {}
+export class ActivitiesModule { }
