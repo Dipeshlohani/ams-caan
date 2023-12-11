@@ -1,3 +1,4 @@
+// comment resolver
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { CommentService } from './comment.service';
 import { Comment } from './comment.model';
@@ -33,4 +34,19 @@ export class CommentsResolver {
   ) {
     return this.commentsService.createComment(content, userId, activityId);
   }
+
+  @Mutation(() => Comment)
+  async updateComment(
+    @Args('commentId', { type: () => String }) commentId: string,
+    @Args('content', { type: () => String }) content: string,
+  ) {
+    return this.commentsService.updateComment(commentId, content);
+  }
+
+  // @Mutation(() => Comment)
+  // async deleteComment(
+  //   @Args('commentId', { type: () => String }) commentId: string,
+  // ) {
+  //   return this.commentsService.deleteComment(commentId);
+  // }
 }

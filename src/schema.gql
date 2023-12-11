@@ -76,6 +76,5 @@ type Mutation {
   deleteReaction(reactionId: String!): Boolean!
   createComment(content: String!, userId: String!, activityId: String!): Comment!
   updateComment(commentId: String!, content: String!): Comment!
-  deleteComment(commentId: String!): Comment!
   createUser(name: String!, designation: String!): User!
 }
